@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ "${WINEPREFIX}" = "" ]; then
+    WINEPREFIX=$HOME/.wine
+fi
+
 wget https://download.microsoft.com/download/vc60pro/Update/2/W9XNT4/EN-US/VC6RedistSetup_deu.exe &&
 cabextract VC6RedistSetup_deu.exe && cabextract vcredist.exe
 
