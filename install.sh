@@ -4,7 +4,13 @@ if [ "${WINEPREFIX}" = "" ]; then
     WINEPREFIX=$HOME/.wine
 fi
 
-wget https://download.microsoft.com/download/vc60pro/Update/2/W9XNT4/EN-US/VC6RedistSetup_deu.exe &&
+wget https://download.microsoft.com/download/vc60pro/Update/2/W9XNT4/EN-US/VC6RedistSetup_deu.exe
+SHA=`sha256sum VC6RedistSetup_deu.exe | awk '{print $1}'`
+
+if [ "$SHA" != "c2eb91d9c4448d50e46a32fecbcc3b418706d002beab9b5f4981de552098cee7" ]; then
+    exit
+fi
+
 cabextract VC6RedistSetup_deu.exe && cabextract vcredist.exe
 
 cp *.dll ${WINEPREFIX}/drive_c/windows/system32/
