@@ -4,9 +4,14 @@ if [ "${WINEPREFIX}" = "" ]; then
     WINEPREFIX=$HOME/.wine
 fi
 
-KARCH=$(uname -m)
+if [ ! -f "${WINEPREFIX}/system.reg" ]; then
+    echo "Error: system.reg not found in ${WINEPREFIX}"
+    exit 1
+fi
 
-if [ "$KARCH" = "x86_64" ] || [ "$KARCH" = "aarch64" ]; then
+WINEARCH=$(head -4 "${WINEPREFIX}/system.reg" | grep -i "win64")
+
+if [ -n "$WINEARCH" ]; then
     SYS_PATH=${WINEPREFIX}/drive_c/windows/syswow64
 else
     SYS_PATH=${WINEPREFIX}/drive_c/windows/system32
@@ -20,7 +25,7 @@ SHA=`sha256sum VC6RedistSetup_deu.exe | awk '{print $1}'`
 
 if [ "$SHA" != "c2eb91d9c4448d50e46a32fecbcc3b418706d002beab9b5f4981de552098cee7" ]; then
     echo "Invalid SHA256: ${SHA}"
-    exit
+    exit 2
 fi
 
 cabextract VC6RedistSetup_deu.exe && cabextract vcredist.exe
