@@ -38,4 +38,4 @@ wine ${SYS_PATH}/regsvr32.exe comcat.dll
 wine ${SYS_PATH}/regsvr32.exe mfc42.dll
 wine ${SYS_PATH}/regsvr32.exe mfc42u.dll
 wine ${SYS_PATH}/regsvr32.exe oleaut32.dll
-WINEPREFIX=${WINEPREFIX} wine ${SYS_PATH}/regsvr32.exe olepro32.dll
+wine ${SYS_PATH}/regsvr32.exe olepro32.dll
