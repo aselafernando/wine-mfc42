@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "${WINEPREFIX}" = "" ]; then
-    WINEPREFIX=$HOME/.wine
+    export WINEPREFIX=$HOME/.wine
 fi
 
 if [ ! -f "${WINEPREFIX}/system.reg" ]; then
@@ -21,7 +21,7 @@ if [ ! -f VC6RedistSetup_deu.exe ]; then
     curl -L -O https://download.microsoft.com/download/vc60pro/Update/2/W9XNT4/EN-US/VC6RedistSetup_deu.exe
 fi
 
-SHA=`sha256sum VC6RedistSetup_deu.exe | awk '{print $1}'`
+SHA=$(sha256sum VC6RedistSetup_deu.exe | awk '{print $1}')
 
 if [ "$SHA" != "c2eb91d9c4448d50e46a32fecbcc3b418706d002beab9b5f4981de552098cee7" ]; then
     echo "Invalid SHA256: ${SHA}"
@@ -38,4 +38,4 @@ wine ${SYS_PATH}/regsvr32.exe comcat.dll
 wine ${SYS_PATH}/regsvr32.exe mfc42.dll
 wine ${SYS_PATH}/regsvr32.exe mfc42u.dll
 wine ${SYS_PATH}/regsvr32.exe oleaut32.dll
-wine ${SYS_PATH}/regsvr32.exe olepro32.dll
+WINEPREFIX=${WINEPREFIX} wine ${SYS_PATH}/regsvr32.exe olepro32.dll
