@@ -6,7 +6,7 @@ fi
 
 KARCH=$(uname -m)
 
-if [ "$karch" = "x86_64" ] || [ "$karch" = "aarch64" ]; then
+if [ "$KARCH" = "x86_64" ] || [ "$KARCH" = "aarch64" ]; then
     SYS_PATH = ${WINEPREFIX}/drive_c/windows/syswow64
 else
     SYS_PATH = ${WINEPREFIX}/drive_c/windows/system32
